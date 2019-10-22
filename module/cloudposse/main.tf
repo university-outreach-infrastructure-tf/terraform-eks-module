@@ -9,7 +9,7 @@ module "eks_label" {
 }
 
 locals {
-  tags = merge(module.label.tags, map("kubernetes.io/cluster/${module.eks_label.id}", "shared"))
+  tags = merge(module.eks_label.tags, map("kubernetes.io/cluster/${module.eks_label.id}", "shared"))
 }
 
 module "eks_vpc" {
@@ -32,14 +32,14 @@ module "eks_workers" {
   attributes                             = var.attributes
   tags                                   = var.tags
   instance_type                          = var.instance_type
-  vpc_id                                 = module.vpc.vpc_id
-  subnet_ids                             = module.subnets.public_subnet_ids
+  vpc_id                                 = module.eks_vpc.vpc_id
+  subnet_ids                             = [module.eks_vpc.public_subnets]
   associate_public_ip_address            = var.associate_public_ip_address
   health_check_type                      = var.health_check_type
   min_size                               = var.eks_asg_min_size
   max_size                               = var.eks_asg_max_size
   wait_for_capacity_timeout              = var.wait_for_capacity_timeout
-  cluster_name                           = module.label.id
+  cluster_name                           = module.eks_label.id
   cluster_endpoint                       = module.eks_cluster.eks_cluster_endpoint
   cluster_certificate_authority_data     = module.eks_cluster.eks_cluster_certificate_authority_data
   cluster_security_group_id              = module.eks_cluster.security_group_id
@@ -49,15 +49,15 @@ module "eks_workers" {
 }
 
 module "eks_cluster" {
-  source                     = "git::https://https://github.com/cloudposse/terraform-aws-eks-cluster.git?ref=tags/0.6.0"
+  source                     = "git::https://github.com/cloudposse/terraform-aws-eks-cluster.git?ref=tags/0.6.0"
   namespace                  = var.namespace
   stage                      = var.stage
   name                       = var.name
   attributes                 = var.attributes
   tags                       = var.tags
   region                     = var.region
-  vpc_id                     = module.vpc.vpc_id
-  subnet_ids                 = module.subnets.public_subnet_ids
+  vpc_id                     = module.eks_vpc.vpc_id
+  subnet_ids                 = [module.eks_vpc.public_subnets]
   kubernetes_version         = var.kubernetes_version
   kubeconfig_path            = var.kubeconfig_path
   workers_role_arns          = [module.eks_workers.workers_role_arn]

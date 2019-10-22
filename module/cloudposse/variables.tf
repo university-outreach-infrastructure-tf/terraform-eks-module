@@ -44,14 +44,13 @@ variable "instance_type" {
 
 variable "kubernetes_version" {
   type        = string
-  default     = ""
   description = "Desired Kubernetes master version. If you do not specify a value, the latest available version is used"
 }
 
 variable "health_check_type" {
   type        = string
   description = "Controls how health checking is done. Valid values are `EC2` or `ELB`"
-  defult      = "EC2"
+  default      = "EC2"
 }
 
 variable "associate_public_ip_address" {
@@ -98,4 +97,24 @@ variable "kubeconfig_path" {
   type        = string
   description = "The path to `kubeconfig` file"
   default     = "/.kube/config"
+}
+
+variable "region" {
+  type        = string
+  description = "AWS Region"
+}
+
+variable "cidr_block" {
+  type        = string
+  description = "CIDR block for the VPC"
+}
+
+variable "private_subnets" {
+  type        = list
+  description = "List of private subnets (Value needs to be in CIDR Block range)"
+}
+
+variable "public_subnets" {
+  type        = list
+  description = "List of public subnets (Value needs to be in CIDR Block range)"
 }

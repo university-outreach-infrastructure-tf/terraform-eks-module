@@ -10,7 +10,7 @@ output "private_subnet_ids" {
 
 output "vpc_id" {
   description = "VPC ID"
-  value       = module.networking_setup.vpc_id
+  value       = module.eks_vpc.vpc_id
 }
 
 output "vpc_cidr" {

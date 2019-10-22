@@ -1,5 +1,7 @@
 variable "region" {}
-variable "cidr" {}
+variable "aws_access_key" {}
+variable "aws_secret_key" {}
+variable "cidr_block" {}
 variable "private_subnets" {}
 variable "public_subnets" {}
 variable "availability_zones" {}

@@ -1,11 +1,11 @@
 output "public_subnets_ids" {
   description = "Public subnet IDs"
-  value       = module.uwm_kube_cluster.public_subnets
+  value       = module.uwm_kube_cluster.public_subnets_ids
 }
 
 output "private_subnet_ids" {
   description = "Private subnet IDs"
-  value       = module.uwm_kube_cluster.public_subnets
+  value       = module.uwm_kube_cluster.private_subnet_ids
 }
 
 output "vpc_id" {
@@ -20,17 +20,17 @@ output "vpc_cidr" {
 
 output "eks_cluster_security_group_id" {
   description = "ID of the EKS cluster Security Group"
-  value       = module.uwm_kube_cluster.security_group_id
+  value       = module.uwm_kube_cluster.eks_cluster_security_group_id
 }
 
 output "eks_cluster_security_group_arn" {
   description = "ARN of the EKS cluster Security Group"
-  value       = module.uwm_kube_cluster.security_group_arn
+  value       = module.uwm_kube_cluster.eks_cluster_security_group_arn
 }
 
 output "eks_cluster_security_group_name" {
   description = "Name of the EKS cluster Security Group"
-  value       = module.uwm_kube_cluster.security_group_name
+  value       = module.uwm_kube_cluster.eks_cluster_security_group_name
 }
 
 output "eks_cluster_id" {
@@ -120,7 +120,7 @@ output "workers_security_group_arn" {
 
 output "workers_security_group_name" {
   description = "Name of the worker nodes Security Group"
-  value       = module.uwm_kube_cluster.security_group_name
+  value       = module.uwm_kube_cluster.workers_security_group_name
 }
 
 output "workers_role_arn" {

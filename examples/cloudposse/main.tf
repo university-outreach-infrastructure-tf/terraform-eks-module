@@ -1,7 +1,13 @@
+provider "aws" {
+  region     = var.region
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+}
+
 module "uwm_kube_cluster" {
   source             = "../../module/cloudposse/"
   region             = var.region
-  cidr               = var.cidr
+  cidr_block         = var.cidr_block
   private_subnets    = var.private_subnets
   public_subnets     = var.public_subnets
   availability_zones = var.availability_zones
