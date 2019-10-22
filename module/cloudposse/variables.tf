@@ -96,7 +96,7 @@ variable "cpu_utilization_low_threshold_percent" {
 variable "kubeconfig_path" {
   type        = string
   description = "The path to `kubeconfig` file"
-  default     = "/.kube/config"
+  default     = "~/.kube/config"
 }
 
 variable "region" {
