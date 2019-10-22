@@ -33,7 +33,7 @@ module "eks_workers" {
   tags                                   = var.tags
   instance_type                          = var.instance_type
   vpc_id                                 = module.eks_vpc.vpc_id
-  subnet_ids                             = [module.eks_vpc.public_subnets]
+  subnet_ids                             = flatten([module.eks_vpc.public_subnets])
   associate_public_ip_address            = var.associate_public_ip_address
   health_check_type                      = var.health_check_type
   min_size                               = var.eks_asg_min_size
@@ -57,7 +57,7 @@ module "eks_cluster" {
   tags                       = var.tags
   region                     = var.region
   vpc_id                     = module.eks_vpc.vpc_id
-  subnet_ids                 = [module.eks_vpc.public_subnets]
+  subnet_ids                 = flatten([module.eks_vpc.public_subnets])
   kubernetes_version         = var.kubernetes_version
   kubeconfig_path            = var.kubeconfig_path
   workers_role_arns          = [module.eks_workers.workers_role_arn]
