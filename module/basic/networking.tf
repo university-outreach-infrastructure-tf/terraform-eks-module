@@ -23,7 +23,3 @@ module "uwm_eks_cluster_vpc_app" {
   public_subnets     = "${var.public_subnets}"
   availability_zones = "${var.availability_zones}"
 }
-
-aws s3api create-bucket \
---bucket uwm-test-bucket \
---region us-east-2

@@ -1,0 +1,12 @@
+region             = "us-east-2"
+cidr               = "10.0.0.0/16"
+private_subnets    = ["10.0.32.0/20", "10.0.96.0/20"]
+public_subnets     = ["10.0.0.0/19", "10.0.64.0/19"]
+availability_zones = ["us-east-2a", "us-east-2b"]
+namespace          = "ex"
+stage              = "test"
+attributes         = ["xyz"]
+name               = "app"
+eks_asg_max_size   = 3
+eks_asg_min_size   = 2
+kubernetes_version = "1.14"

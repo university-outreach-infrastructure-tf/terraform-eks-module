@@ -1,0 +1,12 @@
+variable "region" {}
+variable "cidr" {}
+variable "private_subnets" {}
+variable "public_subnets" {}
+variable "availability_zones" {}
+variable "namespace" {}
+variable "stage" {}
+variable "attributes" {}
+variable "name" {}
+variable "eks_asg_max_size" {}
+variable "eks_asg_min_size" {}
+variable "kubernetes_version" {}

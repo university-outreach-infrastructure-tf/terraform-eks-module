@@ -1,7 +1,3 @@
-provider "aws" {
-  region = var.region
-}
-
 module "eks_label" {
   source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
   namespace  = var.namespace
@@ -9,23 +5,23 @@ module "eks_label" {
   stage      = var.stage
   delimiter  = var.delimiter
   attributes = compact(concat(var.attributes, list("cluster")))
-  tags       = var.tags
+  tags       = { "Name" = var.name, "Environment" = var.stage }
 }
 
 locals {
-  tags = merge(module.label.tags, map("kubernetes.io/cluster/${module.label.id}", "shared"))
+  tags = merge(module.label.tags, map("kubernetes.io/cluster/${module.eks_label.id}", "shared"))
 }
 
-module "vpc" {
+module "eks_vpc" {
   source             = "github.com/university-outreach-infrastructure-tf/terraform-networking-module.git//module?ref=0.2.0"
-  namespace          = "${var.namespace}"
-  stage              = "${var.stage}"
-  attributes         = "${var.attributes}"
-  name               = "${var.name}"
-  cidr               = "${var.cidr_block}"
-  private_subnets    = "${var.private_subnets}"
-  public_subnets     = "${var.public_subnets}"
-  availability_zones = "${var.availability_zones}"
+  namespace          = var.namespace
+  stage              = var.stage
+  attributes         = var.attributes
+  name               = var.name
+  cidr               = var.cidr_block
+  private_subnets    = var.private_subnets
+  public_subnets     = var.public_subnets
+  availability_zones = var.availability_zones
 }
 
 module "eks_workers" {
@@ -40,8 +36,8 @@ module "eks_workers" {
   subnet_ids                             = module.subnets.public_subnet_ids
   associate_public_ip_address            = var.associate_public_ip_address
   health_check_type                      = var.health_check_type
-  min_size                               = var.min_size
-  max_size                               = var.max_size
+  min_size                               = var.eks_asg_min_size
+  max_size                               = var.eks_asg_max_size
   wait_for_capacity_timeout              = var.wait_for_capacity_timeout
   cluster_name                           = module.label.id
   cluster_endpoint                       = module.eks_cluster.eks_cluster_endpoint
